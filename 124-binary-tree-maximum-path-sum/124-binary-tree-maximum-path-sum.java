@@ -15,6 +15,15 @@
  */
 class Solution {
     
+    public class Pair{
+        int s,b;
+        Pair(){};
+        Pair(int s,int b){
+            this.s = s;
+            this.b = b;
+        }
+    }
+    
     public int max(int... arr){
         int m = (int)-1e9;
         for(int ele: arr){
@@ -23,36 +32,26 @@ class Solution {
             }
         }
         return m;
+    }  
+    
+    public int maxPathSum(TreeNode root) {   
+        Pair ans = getAnsPair(root);
+        return ans.s;
     }
     
-    public int nodeToRoot(TreeNode node){
+    public Pair getAnsPair(TreeNode node){
         if(node == null){
-            return 0;
+            return new Pair((int)-1e9,0);
         }
         
-        int leftBranch = nodeToRoot(node.left);
-        int rightBranch = nodeToRoot(node.right);
+        Pair leftPair = getAnsPair(node.left);
+        Pair rightPair = getAnsPair(node.right);
         
-        int recAns = max(leftBranch,rightBranch,0);
+        int maxBranch = node.val + max(leftPair.b,rightPair.b,0);
         
-        return node.val+recAns;
-    }
-    
-    
-    public int maxPathSum(TreeNode root) {
+        int currSubtree = node.val + max(leftPair.b,0) + max(rightPair.b,0);
+        int maxSubtree = max(currSubtree,leftPair.s,rightPair.s);
         
-        if(root == null){
-            return (int)-1e9;
-        }
-        
-        
-        int leftSubtree = maxPathSum(root.left);
-        int rightSubtree = maxPathSum(root.right);
-        
-        int maxLeftBranch = nodeToRoot(root.left);
-        int maxRightBranch = nodeToRoot(root.right);
-        int currSubtree = Math.max(maxLeftBranch,0) + root.val + Math.max(maxRightBranch,0);
-        
-        return max(currSubtree,leftSubtree,rightSubtree);
+        return new Pair(maxSubtree,maxBranch);
     }
 }
