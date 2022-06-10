@@ -14,21 +14,52 @@
  * }
  */
 class Solution {
+    public class Pair{
+        TreeNode head,tail;
+        Pair(){}
+        Pair(TreeNode head,TreeNode tail){
+            this.head = head;
+            this.tail = tail;
+        }
+    }
+    
     public void flatten(TreeNode root) {
-        if(root == null){
-            return;
+        helper(root);
+        
+    }
+    
+    public Pair helper(TreeNode node){
+        if(node == null){
+            return null;
         }
         
-        flatten(root.left);
-        flatten(root.right);
         
-        TreeNode temp = root.right;
-        root.right = root.left;
-        root.left = null;
-        TreeNode rightMost = root;
-        while(rightMost.right != null){
-            rightMost = rightMost.right;
+        
+        if(node.left != null && node.right != null){
+            Pair lPair= helper(node.left);
+            Pair rPair= helper(node.right);
+           
+            lPair.tail.right = node.right;
+            node.right = lPair.head;
+            node.left = null;
+            Pair myPair = new Pair(node,rPair.tail);
+            return myPair;
+        }else if(node.left == null && node.right == null){
+            Pair myPair = new Pair(node,node);
+            return myPair;
         }
-        rightMost.right = temp;
+        else if(node.left != null){
+            Pair lPair= helper(node.left);
+            node.right = lPair.head;
+            node.left = null;
+            Pair myPair = new Pair(node,lPair.tail);
+            return myPair;
+        }else{
+            Pair rPair= helper(node.right);
+            Pair myPair = new Pair(node,rPair.tail);
+            return myPair;
+        }
+               
+        
     }
 }
