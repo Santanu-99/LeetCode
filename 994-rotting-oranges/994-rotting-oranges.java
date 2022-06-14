@@ -1,62 +1,61 @@
 class Solution {
-    
-    private class Pair{
-        int i,j;
-        
+    class Pair{
+        int r , c;
         Pair(){}
-        
-        Pair(int i,int j){
-            this.i = i;
-            this.j = j;
+        Pair(int r,int c){
+            this.r = r;
+            this.c = c;
         }
     }
     
-    private int init(int[][] grid,Queue<Pair> qu){   
-        int freshOranges = 0;
-        for(int i=0;i<grid.length;i++){
-            for(int j=0;j<grid[0].length;j++){
+    int dir[][] = {{-1,0},{0,1},{1,0},{0,-1}};
+    
+    public int init(int[][] grid , Queue<Pair> qu){
+        int fresh = 0;
+        for(int i=0; i<grid.length; i++){
+            for(int j=0; j<grid[0].length; j++){
                 if(grid[i][j] == 2){
                     qu.add(new Pair(i,j));
                 }else if(grid[i][j] == 1){
-                    freshOranges++;
+                    fresh++;
                 }
             }
         }
-        return freshOranges;
+        return fresh;
     }
     
-    int dir[][] = {{1,0},{0,1},{-1,0},{0,-1}};
-    
     public int orangesRotting(int[][] grid) {
-        
         Queue<Pair> qu = new LinkedList<>();
-        int freshOrange = init(grid,qu);
-        int time =0;
-        while(qu.size() != 0){
+        int fresh = init(grid,qu);
+        int time = -1;
+        
+        while(qu.size() > 0){
             int tempSize = qu.size();
-            if(freshOrange == 0){
-                break;
-            }
             
             while(tempSize-- > 0){
-
-                Pair rm = qu.remove();
-
-                for(int[] d: dir){
-                    int r = rm.i + d[0];
-                    int c = rm.j + d[1];
-                    if(r>=0 && c>=0 && r<grid.length && c<grid[0].length && grid[r][c] == 1){
-                        grid[r][c] = 2;
-                        freshOrange--;
-                        qu.add(new Pair(r,c));
-
+                Pair rem = qu.remove();
+                for(int d=0;d<dir.length;d++){
+                    int nr = rem.r + dir[d][0];
+                    int nc = rem.c + dir[d][1];
+                    if(0<=nr && 0<=nc && nr<grid.length && nc<grid[0].length && grid[nr][nc] == 1){
+                        grid[nr][nc] = 2;
+                        qu.add(new Pair(nr,nc));
+                        fresh--;
                     }
                 }
+                
             }
             time++;
         }
-
         
-        return freshOrange == 0 ? time : -1;
+//         If there were no fresh oranges to begin with
+        if(time == -1 && fresh == 0){
+            return 0;
+        }
+        
+//         If all the fresh oranges are gone or not
+        time = fresh == 0 ? time : -1;
+        return time;
+        
     }
 }
