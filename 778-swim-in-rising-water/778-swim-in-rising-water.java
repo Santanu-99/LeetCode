@@ -21,6 +21,7 @@ class Solution {
         boolean[][] visited = new boolean[grid.length][grid[0].length];
         
         pq.add(new Pair(0,0,grid[0][0]));
+        visited[0][0] = true;
         
         while(pq.size() > 0){
             
@@ -28,13 +29,8 @@ class Solution {
             Pair rem = pq.remove();
             int r = rem.r;
             int c = rem.c;
-            int time = rem.time;
+            int time = rem.time;     
             
-            // mark
-            if(visited[r][c]){
-                continue;
-            }
-            visited[r][c] = true;
             
             // work
             if(r == grid.length-1 && c == grid[0].length-1){
@@ -46,6 +42,7 @@ class Solution {
                 int nr = r + dir[d][0];
                 int nc = c + dir[d][1];
                 if(nr>=0 && nc>=0 && nr<grid.length && nc<grid[0].length && visited[nr][nc] == false){
+                    visited[nr][nc] = true;
                     pq.add(new Pair(nr,nc,Math.max(time,grid[nr][nc])));
                 }
             }
