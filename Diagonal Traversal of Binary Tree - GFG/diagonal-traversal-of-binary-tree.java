@@ -123,46 +123,35 @@ class Node{
 }*/
 class Tree
 {
-    
-    public int dfs(Node root,int diag,int md,HashMap<Integer, LinkedList<Integer>> hm){
-        
-        if(diag > md){
-            md = diag;
+    public void dfs(Node node, int d,HashMap<Integer,ArrayList<Integer>> hm){
+        if(node == null){
+            return;
         }
         
-        LinkedList<Integer> dList = hm.getOrDefault(diag,new LinkedList<>());
-        dList.add(root.data);
-        hm.put(diag,dList);
+        ArrayList<Integer> dList = hm.getOrDefault(d, new ArrayList<Integer>());
+        dList.add(node.data);
+        hm.put(d,dList);
         
-        if(root.left != null){
-            md = dfs(root.left,diag+1,md,hm);
-        }
-        if(root.right != null){
-            md = dfs(root.right,diag,md,hm);
-        }
-        return md;
+        dfs(node.left , d+1 , hm);
+        dfs(node.right , d ,hm);
+        
     }
     
      public ArrayList<Integer> diagonal(Node root)
       {
-           //add your code here.
-           ArrayList<Integer> retVal = new ArrayList<>();
-           if(root == null){
-               return retVal;
+           //add your code here
+           
+           HashMap<Integer,ArrayList<Integer>> hm = new HashMap<>();
+           dfs(root,0,hm);
+           
+           ArrayList<Integer> ans = new ArrayList<>();
+           int d=0;
+           while(hm.containsKey(d)){
+               for(int ele : hm.get(d)){
+                   ans.add(ele);
+               }
+               d++;
            }
-           
-           HashMap<Integer,LinkedList<Integer>> hm = new HashMap<>();
-           int md = dfs(root,0,0,hm);
-        //   System.out.println(hm);
-        //   System.out.println(md);
-          for(int i=0;i<=md;i++){
-                LinkedList<Integer> dlist = hm.get(i);
-                for(int ele : dlist){
-                    retVal.add(ele);
-                }
-          }
-           
-           
-           return retVal;
+           return ans;
       }
 }
