@@ -118,66 +118,57 @@ class GfG {
 
 class Solution
 {
-    static class Pair{
-        Node node;int np;
+    class Pair{
+        Node node;int v;
         Pair(){}
-        
-        Pair(Node node , int np){
-            this.node = node ;
-            this.np = np;
+        Pair(Node node, int v){
+            this.node = node;
+            this.v = v;
         }
     }
-    
-    
     //Function to return a list containing the bottom view of the given tree.
     public ArrayList <Integer> bottomView(Node root)
     {
         // Code here
-        ArrayList<Integer> retVal = new ArrayList<>();
-        if(root == null){
-            return retVal;
-        }
-        
-        int lp , rp;
-        lp = rp=0;
-        HashMap<Integer,Integer> hm = new HashMap<>();
-        
         Queue<Pair> qu = new LinkedList<>();
+        HashMap<Integer,Node> hm = new HashMap<>();
+        
+        
         qu.add(new Pair(root,0));
         
-        hm.put(0,root.data);
+        int li,ri;
+        li = ri = 0;
         
         while(qu.size() > 0){
-            int lvlSize = qu.size();
+            // remove
+            Pair rem = qu.remove();
+            Node remN = rem.node;
+            int v = rem.v;
             
-            for(int i=1;i<= lvlSize;i++){
-                Pair remPair = qu.remove();
-                
-                Node remN = remPair.node;
-                int np = remPair.np;
-                
-                if(remN.left != null){
-                    qu.add(new Pair(remN.left,np-1));
-                }
-                if(remN.right != null){
-                    qu.add(new Pair(remN.right,np+1));
-                }
-                
-                hm.put(np,remN.data);
-                if(np <lp){
-                    lp = np;
-                }
-                if(rp < np){
-                    rp = np;
-                }
-                
+            // work
+            hm.put(v,remN);
+            if(v < li){
+                li = v;
+            }else if(ri < v){
+                ri = v;
             }
+            
+            // add
+            if(remN.left != null){
+                qu.add(new Pair(remN.left,v-1));
+            }
+            if(remN.right != null){
+                qu.add(new Pair(remN.right,v+1));
+            }
+            
         }
         
-        for(int i=lp;i<= rp;i++){
-            retVal.add(hm.get(i));
+        ArrayList<Integer> ans = new ArrayList<>();
+        
+        for(int i = li;i<=ri;i++){
+            ans.add(hm.get(i).data);
         }
         
-        return retVal;
+        return ans;
     }
 }
