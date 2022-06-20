@@ -15,27 +15,25 @@
  */
 class Solution {
     public int sumNumbers(TreeNode root) {
-        StringBuilder sb = new StringBuilder();
-        helper(root,sb);
+        
+        helper(root,0);
         return sum;
     }
     int sum = 0;
-    void helper(TreeNode root, StringBuilder psf){
+    void helper(TreeNode root, int nsf){
         if(root == null){
             return;
         }
         
-        psf = psf.append(root.val);
+        nsf = nsf*10 + root.val ;
         
         if(root.left == null && root.right == null){
-            int leafNum = Integer.parseInt(psf.toString());
-            sum = sum + leafNum;
+            sum = sum + nsf;
         }
         
-        helper(root.left ,psf);
-        helper(root.right , psf);
+        helper(root.left ,nsf);
+        helper(root.right , nsf);
         
-        psf.deleteCharAt(psf.length()-1);
         
     }
 }
