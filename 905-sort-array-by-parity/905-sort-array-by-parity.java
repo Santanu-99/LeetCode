@@ -1,25 +1,21 @@
 class Solution {
     public int[] sortArrayByParity(int[] nums) {
-        int i=0;
-        int j=nums.length-1;
-        while(i<j){
-            //skip evens at beginning
-            while( i<nums.length && nums[i] % 2 == 0 ){
-                i++;
-            }
-            //skip odd at the end
-            while( j>=0 && nums[j] % 2 != 0){
-                j--;
-            }
-            
-            //if i and j still holds the condition
-            if(i < j){
+        
+        //using two pointer approach
+        int i,j;
+        i = j = 0;
+        while(i<nums.length){
+            // if even is found in i then increase then swap and increase both i and j
+            if(nums[i] % 2 == 0){
                 int temp = nums[i];
                 nums[i] = nums[j];
                 nums[j] = temp;
-                //move on to the next positions
                 i++;
-                j--;
+                j++;
+            }
+            // if odd found then just increse i
+            else{
+                i++;
             }
             
         }
