@@ -1,0 +1,40 @@
+class Solution {
+    
+    class Pair implements Comparable<Pair>{
+        int time,load;
+        Pair(){}
+        Pair(int time , int load){
+            this.time = time;
+            this.load = load;
+        }
+        
+        public int compareTo(Pair other){
+            if(this.time == other.time){
+                return this.load;
+            }
+            return this.time - other.time;
+        }
+    }
+    
+    public boolean carPooling(int[][] trips, int capacity) {
+        PriorityQueue<Pair> pq = new PriorityQueue<>();
+        
+        for(int[] trip : trips){
+            int l = trip[0];
+            int from = trip[1];
+            int to = trip[2];
+            
+            pq.add(new Pair(from , l));
+            pq.add(new Pair(to, -l));
+        }
+        
+        int currLoad = 0;
+        while(pq.size() > 0){
+            currLoad = currLoad + pq.remove().load;
+            if(currLoad > capacity){
+                return false;
+            }
+        }
+        return true;
+    }
+}
