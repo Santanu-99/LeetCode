@@ -9,9 +9,15 @@ class Solution {
         }
         
         public int compareTo(Pair other){
+            // if loading and unloading time becomes same then first unload and then load
+            // concept used: 
+            // if thisPair.time has (+)ve load then swap it backwards
+            // else if thisPair.time (-)ve load then keep it in the front
             if(this.time == other.time){
                 return this.load;
             }
+            
+            // other wise process the one with lowest time first
             return this.time - other.time;
         }
     }
