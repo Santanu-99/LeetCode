@@ -20,18 +20,19 @@ class Solution {
             return;
         }
         
-        if(target - candidate[idx] >= 0){
-            comb.add(candidate[idx]);
-            solver(candidate , target - candidate[idx] , idx+1 , comb , ans);
-            comb.remove(comb.size()-1);
+        for(int i = idx; i<candidate.length ; i++){
+            if(target - candidate[idx] >= 0){
+                
+                // prev and curr check to avoid duplicate calls
+                if( (i == idx) || (candidate[i-1] != candidate[i]) ){
+                    comb.add(candidate[i]);
+                    solver(candidate , target - candidate[i] , i+1 , comb , ans);
+                    comb.remove(comb.size()-1);    
+                }
+                
+            }
         }
-        int prev = idx;
-        int curr = idx + 1;
-        while(curr < candidate.length && candidate[prev] == candidate[curr]){
-            prev = curr;
-            curr = curr+1;
-        }
-        solver(candidate, target , curr , comb , ans);
+
         
     }
 }
