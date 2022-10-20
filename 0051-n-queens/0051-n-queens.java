@@ -8,7 +8,7 @@ class Solution {
             }
         }
         ans = new ArrayList<>();
-        nQueensSolver1(mat,0,0,n,n*n);
+        nQueensSolver2(mat,0,0,n);
         return ans;
     }
     
@@ -42,22 +42,20 @@ class Solution {
         ans.add(newAns);
     }
     
-    void nQueensSolver1(char[][] mat , int bsf , int qsf , int totQ , int totB){
-        if(bsf == totB || qsf == totQ){
-            if(qsf == totQ){
+    void nQueensSolver2(char[][] mat , int r , int qpsf , int n){
+        if(r == n || qpsf == n){
+            if(qpsf == n){
                 addToAns(mat);  
-                System.out.println();
+                // System.out.println();
 
             }
             return;
         }
-        int n = mat.length;
-        for(int b = bsf; b<totB ; b++){
-            int r = b / n;
-            int c = b % n;
+        
+        for(int c = 0; c<n ; c++){
             if(isSafe(mat, r, c)){
                 mat[r][c] = 'Q';
-                nQueensSolver1(mat,b+1 , qsf+1 , totQ, totB);
+                nQueensSolver2(mat,r+1 , qpsf+1 , n);
                 mat[r][c] = '.';
             }
         }
