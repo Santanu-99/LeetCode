@@ -2,38 +2,38 @@
 class Solution {
     
     public int totalNQueens(int n) {
-        row = new boolean[n];
-        col = new boolean[n];
-        diag = new boolean[n+n-1];
-        antiDiag = new boolean[n+n-1];
+        row = 0;
+        col = 0;
+        diag = 0;
+        antiDiag = 0;
         int ans = nQueensSolver2(0,0,n);
         return ans;
     }
     
-    int dir[][] = {{-1,0},{-1,-1},{0,-1},{-1,1}};
-    boolean[] row , col , diag , antiDiag;
+    int row , col , diag , antiDiag;
     
     boolean isSafe2(int r , int c , int n){
-        if(row[r]){
+
+        if((row & (1<<r)) != 0){
             return false;
         }
-        if(col[c]){
+        if((col & (1<<c)) != 0 ){
             return false;
         }
-        if(diag[r-c+n-1]){
+        if( (diag & (1 << (r-c+n-1))) != 0 ){
             return false;
         }
-        if(antiDiag[r+c]){
+        if((antiDiag & (1 << (r+c))) != 0 ){
             return false;
         }
         
         return true;
     }
     void toggle(int r,int c,int n){
-        row[r] = !row[r];
-        col[c] = !col[c];
-        diag[r-c+n-1] = !diag[r-c+n-1];
-        antiDiag[r+c] = !antiDiag[r+c];
+        row ^=  (1 << r);
+        col ^=  (1 << c);
+        diag ^= ( 1 << (r-c+n-1));
+        antiDiag ^= (1 << (r+c));
     }
     
     
