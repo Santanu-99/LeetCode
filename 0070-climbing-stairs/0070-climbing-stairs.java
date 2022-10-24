@@ -1,8 +1,8 @@
 class Solution {
     public int climbStairs(int n) {
-        int[] dp = new int[n+1];
+        // int[] dp = new int[n+1];
         // int ans = climbStairsMemo(0,n,dp);
-        int ans = climbStairsTabulation(0,n,dp);
+        int ans = climbStairsOpti(n);
         return ans;        
     }
     
@@ -43,6 +43,20 @@ class Solution {
         }
         
         return dp[S];
+    
+    }
+    
+    public int climbStairsOpti(int n ){
+        
+        int a = 1;
+        int b = 1;
+        for(int s=2;s<=n;s++){
+            int sum = a+b;
+            a = b;
+            b = sum;
+        }
+        
+        return b;
     
     }
 
