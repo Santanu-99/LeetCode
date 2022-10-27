@@ -12,10 +12,10 @@ class Solution {
     }
     
     int getDistinct_memo(int m , int n , String s , String t,int[][] dp){
-        if(m==0 || n==0){
-            if(n==0){
-                return dp[m][n]=1;
-            }
+        if(n==0){
+            return dp[m][n]=1;
+        }
+        if(m<n){
             return dp[m][n]=0;
         }
         
