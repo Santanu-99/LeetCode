@@ -3,22 +3,17 @@ class Solution {
         if(n==0){
             return false;
         }
+        
+        int[] facts = {2,3,5};
         int temp = n;
         
-        while(temp%2 == 0){
-            temp = temp / 2;
+        for(int i=0;i<facts.length;i++){
+            int fact = facts[i];
+            while(temp%fact == 0){
+                temp = temp / fact;
+            }
         }
-        // System.out.println(temp);
         
-        while(temp %3 == 0){
-            temp = temp / 3;
-        }
-        // System.out.println(temp);
-
-        while(temp % 5 == 0){
-            temp = temp / 5;
-        }
-        // System.out.println(temp);
         boolean ans =  temp == 1 ? true : false;
         return ans;
     }
