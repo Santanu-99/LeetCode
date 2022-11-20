@@ -24,7 +24,42 @@ class Solution {
         // }
         
         
-//         slight greedy
+// //         slight greedy
+//         Queue<Pair> qu = new LinkedList<>();
+        
+//         int i=0,j=0;
+//         while(j<=nums.length){
+//             if(j<nums.length && nums[j] % k == 0){
+//                j++; 
+//             }
+//             else if(i<j){
+//                 qu.add(new Pair(i,j-1));
+//                 j++;
+//                 i=j;
+//             }
+//             else{
+//                 i++;
+//                 j++;
+//             } 
+//         }
+        
+//         // System.out.println(qu);
+//         while(qu.size() != 0){
+//             Pair rem = qu.remove();    
+//             int st = rem.start;
+//             int en = rem.end;
+//             for( i=st;i<=en;i++){
+//                 for( j=i;j<=en;j++){
+//                     int g = calculateSubarrayGCD(nums,i,j);
+//                     // System.out.println(i+"-"+j+" gcd: "+g);
+//                     if(g==k){
+//                         count+=1;
+//                     }
+//                 }
+//             }
+//         }
+        
+        //slight greedy with optimization
         Queue<Pair> qu = new LinkedList<>();
         
         int i=0,j=0;
@@ -49,11 +84,15 @@ class Solution {
             int st = rem.start;
             int en = rem.end;
             for( i=st;i<=en;i++){
+                int g = nums[i];
                 for( j=i;j<=en;j++){
-                    int g = calculateSubarrayGCD(nums,i,j);
+                    g = gcd(Math.min(g,nums[j]) , Math.max(g,nums[j])); 
                     // System.out.println(i+"-"+j+" gcd: "+g);
                     if(g==k){
                         count+=1;
+                    }
+                    else if(g < k){
+                        break;
                     }
                 }
             }
