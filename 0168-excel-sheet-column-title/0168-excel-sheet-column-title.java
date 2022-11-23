@@ -4,11 +4,13 @@ class Solution {
         int temp = columnNumber;
         while(temp >0){
             int c = temp % 26;
-            char ch;
-            if (c==0) ch = 'Z';
-            else ch = (char)(64+c);
+            if (c==0) c = 26;
+            
+            char ch = (char)(64+c);
+            
             str.append(ch);
-            if(c==0){
+            
+            if(c==26){
                 temp = temp / 26 - 1;
             }
             else{
