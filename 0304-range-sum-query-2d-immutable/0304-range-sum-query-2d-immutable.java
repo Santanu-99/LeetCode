@@ -1,10 +1,16 @@
 class NumMatrix {
     int[][] mat;
+    int[][] pre;
     public NumMatrix(int[][] matrix) {    
         mat = new int[matrix.length][matrix[0].length];
+        pre = new int[matrix.length][matrix[0].length];
+
+        int sum = 0;
         for(int r=0;r<matrix.length;r++){
             for(int c=0;c<matrix[0].length;c++){
                 mat[r][c] = matrix[r][c];
+                sum = sum + mat[r][c];
+                pre[r][c] = sum;
             }
         }
     }
@@ -12,9 +18,16 @@ class NumMatrix {
     public int sumRegion(int row1, int col1, int row2, int col2) {
         int sum = 0;
         for(int r=row1;r<=row2;r++){
-            for(int c=col1;c<=col2;c++){
-                sum += mat[r][c];
+            if(r==0 && col1==0){
+                sum = pre[r][col2];
+                continue;
             }
+            else if(col1==0){
+                sum += pre[r][col2] - pre[r-1][mat[0].length-1];
+                continue;
+            }
+            
+            sum += pre[r][col2] - pre[r][col1-1]; 
         }
         return sum;
     }
