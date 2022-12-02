@@ -1,31 +1,40 @@
 class Solution {
+    static class Pair{
+        int val;
+        int idx;
+        Pair(){}
+        Pair(int val,int idx){
+            this.val = val;
+            this.idx = idx;
+        }
+    }
+    
     public int[] twoSum(int[] nums, int target) {
         int[] ans = new int[2];
         
-        HashMap<Integer,Integer> hm = new HashMap<>();
-        for(int ele : nums){
-            hm.put(ele,hm.getOrDefault(ele,0)+1);
+        Pair[] parr = new Pair[nums.length];
+        for(int i=0;i<nums.length;i++){
+            parr[i] = new Pair(nums[i],i);
         }
         
-        int fEle,sEle;
-        fEle=sEle=0;
+        Arrays.sort(parr,(a,b)->{
+            return a.val-b.val;
+        });
         
-        for(int i=0;i<nums.length;i++){
-            if(hm.containsKey(target-nums[i])){
-                if(nums[i] != target-nums[i] || hm.get(nums[i]) > 1){
-                    fEle = nums[i];
-                    sEle = target - nums[i];
-                    break;
-                }
+        int l = 0;
+        int r = parr.length-1;
+        while(l<r){
+            if(parr[l].val + parr[r].val == target){
+                ans[0] = parr[l].idx;
+                ans[1] = parr[r].idx;
+                break;
             }
-        }
-        
-        int count = 0;
-        for(int i=0;i<nums.length;i++){
-            if(nums[i]==fEle || nums[i] == sEle){
-                ans[count] = i;
-                count++;
-            } 
+            else if(parr[l].val+parr[r].val<target){
+                l++;
+            }
+            else{
+                r--;
+            }
         }
         
         return ans;
