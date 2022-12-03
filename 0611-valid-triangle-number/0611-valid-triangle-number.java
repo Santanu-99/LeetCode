@@ -8,6 +8,9 @@ class Solution {
                     if( nums[k] < nums[i]+nums[j]){
                         count ++;
                     }
+                    else{
+                        break;
+                    }
                 }
             }
         }
