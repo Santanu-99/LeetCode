@@ -32,10 +32,11 @@ class Solution
     static int find_height(int tree[], int n, int k)
     {
         Arrays.sort(tree);
-        int min=0,max=tree[n-1];
+        int lo=0,hi=tree[n-1];
         
         
-        for(int h=min;h<=max;h++){
+        while(lo<=hi){
+            int h = lo+(hi-lo)/2;
             int sum = 0;
             for(int i=0;i<tree.length;i++){
                 if(tree[i] > h){ 
@@ -44,6 +45,12 @@ class Solution
             }
             if(sum == k){
                 return h;
+            }
+            else if(sum < k){
+                hi=h-1;
+            }
+            else{
+                lo=h+1;
             }
         }
         
