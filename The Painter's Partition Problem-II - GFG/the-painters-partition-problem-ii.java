@@ -43,16 +43,14 @@ class GFG
                 max = ele;
             }
         }
-        
-        long ans = Long.MAX_VALUE;
+    
         long lo = max;
         long hi = sum;
         
-        boolean flag = false;
-        while(lo<=hi){
+        while(lo<hi){
             long part = 0;
             long maxPartSize=lo+(hi-lo)/2;
-            int npart = 0;
+            int npart = 1;
         
             for(int i=0;i<arr.length;i++){
                 part = part + arr[i];
@@ -62,16 +60,8 @@ class GFG
                 }
             }
             // System.out.println("nPart: "+npart+" PartSize: "+maxPartSize);
-            if(npart == k-1){
-                ans = maxPartSize;
-                hi = maxPartSize-1;
-                flag = true;
-            }
-            else if(npart < k-1){
-                hi = maxPartSize-1;
-                if(flag == false){
-                    ans = maxPartSize;
-                }
+            if(npart <= k){
+                hi = maxPartSize;
             }
             else{
                 lo = maxPartSize +1;
@@ -79,7 +69,7 @@ class GFG
             
         }
         
-        return ans;
+        return lo;
     }
 }
 
