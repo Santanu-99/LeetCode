@@ -37,15 +37,14 @@ class Solution{
     long maxSubarraySum(int arr[], int n){
         
         // Your code here
-        int i = 0,j=0;
+        int i=0;
         long sum = 0;
         long max = Long.MIN_VALUE;
-        while(j<arr.length){
-            sum += arr[j];
+        while(i<arr.length){
+            sum += arr[i];
             max = Math.max(sum , max);
-            j++;
+            i++;
             if(sum < 0){
-                i=j;
                 sum = 0;
             }
             
