@@ -25,24 +25,32 @@ class Solution{
     public static int[] sortA1ByA2(int A1[], int N, int A2[], int M)
     {
         //Your code here
+        HashMap<Integer,Integer> hm = new HashMap<>();
+        for(int ele : A1){
+            hm.put(ele,hm.getOrDefault(ele,0)+1);
+        }
         
         int[] ans = new int[N];
         int count = 0;
-        for(int i=0;i<M;i++){
-            for(int j=0;j<N;j++){
-                if(A2[i] == A1[j]){
-                    ans[count] = A1[j];
-                    A1[j] = -A1[j];
+        for(int ele : A2){
+            if(hm.containsKey(ele)){
+                int j = hm.get(ele);
+                while(j>0){
+                    ans[count] = ele;
                     count++;
+                    j--;
                 }
+                hm.remove(ele);
             }
+            
         }
         Arrays.sort(A1);
-        while(count < N){
-            ans[count] = A1[count];
-            count++;
+        for(int ele : A1){
+            if(hm.containsKey(ele)){
+                ans[count] = ele;
+                count++;
+            }
         }
-        
         return ans;
     }
 }
