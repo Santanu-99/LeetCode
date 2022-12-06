@@ -25,31 +25,34 @@ class Solution{
     public static int[] sortA1ByA2(int A1[], int N, int A2[], int M)
     {
         //Your code here
-        HashMap<Integer,Integer> hm = new HashMap<>();
+        TreeMap<Integer,Integer> tm = new TreeMap<>();
         for(int ele : A1){
-            hm.put(ele,hm.getOrDefault(ele,0)+1);
+            tm.put(ele,tm.getOrDefault(ele,0)+1);
         }
         
         int[] ans = new int[N];
         int count = 0;
         for(int ele : A2){
-            if(hm.containsKey(ele)){
-                int j = hm.get(ele);
+            if(tm.containsKey(ele)){
+                int j = tm.get(ele);
                 while(j>0){
                     ans[count] = ele;
                     count++;
                     j--;
                 }
-                hm.remove(ele);
+                tm.remove(ele);
             }
             
         }
-        Arrays.sort(A1);
-        for(int ele : A1){
-            if(hm.containsKey(ele)){
+        
+        while(tm.size() > 0){
+            int ele = tm.firstKey();
+            int j = tm.get(ele);
+            while(j-- > 0){
                 ans[count] = ele;
                 count++;
             }
+            tm.remove(ele);
         }
         return ans;
     }
