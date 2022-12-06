@@ -40,19 +40,18 @@ class Solution{
                     count++;
                     j--;
                 }
-                tm.remove(ele);
+                tm.put(ele,0);
             }
             
         }
         
-        while(tm.size() > 0){
-            int ele = tm.firstKey();
-            int j = tm.get(ele);
+        for(Map.Entry<Integer,Integer> p : tm.entrySet()){
+            int ele = p.getKey();
+            int j = p.getValue();
             while(j-- > 0){
                 ans[count] = ele;
                 count++;
             }
-            tm.remove(ele);
         }
         return ans;
     }
