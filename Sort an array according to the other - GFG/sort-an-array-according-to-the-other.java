@@ -45,9 +45,9 @@ class Solution{
             
         }
         
-        for(Map.Entry<Integer,Integer> p : tm.entrySet()){
-            int ele = p.getKey();
-            int j = p.getValue();
+        
+        for(int ele : tm.keySet()){
+            int j = tm.get(ele);
             while(j-- > 0){
                 ans[count] = ele;
                 count++;
