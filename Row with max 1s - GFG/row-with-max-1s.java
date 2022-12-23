@@ -36,28 +36,28 @@ public class Main {
 class Solution {
     int rowWithMax1s(int arr[][], int n, int m) {
         // code here
-        int max = 0;
-        int r =-1;
-        for(int i=0;i<n;i++){
-            int rcount = 0;
-            int rmax =0;
-            for(int j=0;j<m;j++){
-                if(arr[i][j] == 0){
-                    rcount=0;
-                }
-                else if(arr[i][j] == 1){
-                    rcount++;
-                }
-                
-                rmax=Math.max(rcount,rmax);
+        int i=0,j=m-1;
+        int si = 0,sj=m-1 ;
+        while(n>i && j>=0){
+            if(arr[i][j] == 1){
+                j--;
             }
-            if(max<rmax){
-                max = rmax;
-                r = i;
-                
+            else{
+                i++;
             }
+            
+            if(j<sj){
+                sj = j;
+                si = i;
+            }
+            
         }
         
-        return r;
+        if(si==0 && sj==m-1  && arr[si][sj] == 0){
+            return -1;
+        }
+        else{
+            return si;
+        }
     }
 }
