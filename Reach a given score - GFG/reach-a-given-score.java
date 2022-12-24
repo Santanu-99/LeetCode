@@ -21,31 +21,29 @@ class GFG {
 
 class Geeks {
     public long count(int n) {
-        long[][] dp = new long[3][n+1];
-        for(long[] arr:dp)
-            Arrays.fill(arr, -1);
+        long[] dp = new long[n+1];
+        // for(long[] arr:dp)
+        //     Arrays.fill(arr, -1);
+        
         
         // Add your code here.
         int score[] = new int[]{3,5,10};
-        long count  = count_memo(n,2,score,dp);
+        long count  = count_tabu(n,2,score,dp);
         
         return count;
     }
     
-    long count_memo(int n,int idx , int[] score ,long[][] dp){
+    long count_tabu(int N,int idx , int[] score ,long[] dp){
         
-        if( n<0 || idx < 0){
-            return 0;
+        dp[0] = 1;
+        for(int i=0;i<score.length;i++){
+            for(int n=0;n<=N;n++){
+                if((n-score[i])>=0){
+                    dp[n] += dp[n-score[i]];
+                }
+            }
         }
-        else if(n==0){
-            return dp[idx][0] = 1;
-        }
         
-        if(dp[idx][n]!=-1) return dp[idx][n];
-        
-        long myAns = count_memo(n-score[idx],idx,score,dp);
-        myAns += count_memo(n,idx-1,score,dp);
-        
-        return dp[idx][n]=myAns;
+        return dp[N];
     }
 }
