@@ -53,28 +53,29 @@ class Solution
     { 
          // your code here
          
-         int[][] dp = new int[n+1][W+1];
+         int[][] dp = new int[n][W+1];
          for(int[] ar : dp){
              Arrays.fill(ar,-1);
          }
-         int ans = getMaxVal(n,W,wt,val,dp);
+         int ans = getMaxVal(W,n-1,wt,val,dp);
          return ans;
     } 
     
-    static int getMaxVal(int n,int W , int[] wt,int[] val,int[][] dp){
+    static int getMaxVal(int cap,int itm , int[] wt,int[] val,int[][] dp){
+        if(itm<0) return 0;
+        if(cap==0) return dp[itm][cap]=0;
         
-        if(n==0 || W==0){
-            return dp[n][W]=0;
-        }
-        
-        if(dp[n][W] != -1) return dp[n][W];
+        if(dp[itm][cap] != -1) return dp[itm][cap];
         int inc = 0;
-        if(W >= wt[n-1])
-            inc = getMaxVal(n-1, W-wt[n-1], wt, val, dp)+val[n-1];
-        int exc = getMaxVal(n-1, W, wt, val, dp);
+        if(cap-wt[itm]>=0)
+            inc = getMaxVal(cap-wt[itm],itm-1,wt,val,dp) + val[itm];
+        int exc = getMaxVal(cap,itm-1,wt,val,dp);
         
+        int myAns = Math.max(inc,exc);
+        dp[itm][cap]=myAns;
         
-        return dp[n][W] = Math.max(inc,exc);
+        return myAns;
+        
     }
 }
 
