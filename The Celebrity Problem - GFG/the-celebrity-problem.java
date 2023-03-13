@@ -36,33 +36,39 @@ class Solution
     int celebrity(int M[][], int n)
     {
     	// code here 
-    	//doesn't knows anyone
-    	boolean[] row = new boolean[n];
-    	// known by everyone
-    	boolean[] col = new boolean[n];
-    	
-    	for(int i=0;i<n ;i++){
-    	    int oneCount = 0;
-    	    for(int j=0;j<n;j++){
-    	        if(M[i][j] == 1) oneCount++;
-    	    }
-    	    if(oneCount == 0) row[i] = true;
-    	}
-    	for(int j=0;j<n ;j++){
-    	    int oneCount = 0;
-    	    for(int i=0;i<n;i++){
-    	        if(M[i][j] == 1) oneCount++;
-    	    }
-    	    if(oneCount == (n-1)) col[j] = true;
-    	}
-    	
-    	
-    	for(int i=0;i<n;i++){
-    	    if(row[i] && col[i]){
-    	        return i;
-    	    }
-    	}
-    	
-    	return -1;
+    	Stack<Integer> st = new Stack<>();
+        
+        
+        for(int i=0;i<n;i++){
+            st.push(i);
+        }
+        
+        for(int i=0;i<n-1;i++){
+            int a = st.pop();
+            int b = st.pop();
+            if(M[a][b] == 0){
+                st.push(a);
+            }
+            else{
+                st.push(b);
+            }
+        }
+        
+        int p = st.pop();
+        int count = 0;
+        for(int i=0;i<n;i++){
+            if(M[i][p] == 1){
+                count++;
+            }
+            if(M[p][i] == 1){
+                return -1;
+            }
+        }
+        if(count < n-1){
+            return -1;
+        }
+        
+        
+        return p;
     }
 }
