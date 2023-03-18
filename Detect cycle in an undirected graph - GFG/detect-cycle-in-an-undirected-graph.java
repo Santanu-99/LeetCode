@@ -53,12 +53,15 @@ class Solution {
         
         boolean res = false;
         for(int nbr : graph.get(src)){
+            
             if( nbr!=parent && vis[nbr]){
                 return true;
             }
-            if(nbr != parent){
+            
+            if(!vis[nbr]){
                 res = res || dfs(src , nbr, vis , graph);
             }
+            
         }
         
         return res;
