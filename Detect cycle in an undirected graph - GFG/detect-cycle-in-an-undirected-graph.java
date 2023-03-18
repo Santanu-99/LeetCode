@@ -66,4 +66,41 @@ class Solution {
         
         return res;
     }
+    class Pair{
+        int node , parent;
+        Pair(){}
+        Pair(int node, int parent){
+            this.node = node;
+            this.parent = parent;
+        }
+    }
+    
+    public boolean bfs(int src , boolean[] vis, ArrayList<ArrayList<Integer>> graph){
+        
+        Queue<Pair> q = new ArrayDeque<>();
+        q.add(new Pair(src,-1));
+        vis[src] = true;
+        
+        while(q.size() > 0){
+            Pair p = q.remove();
+            int rem = p.node;
+            int parent = p.parent;
+            
+            for(int nbr : graph.get(rem)){
+                
+                if(nbr!=parent && vis[nbr]){
+                    return true;
+                }
+                
+                if(!vis[nbr]){
+                    q.add(new Pair(nbr , rem));
+                }
+                
+            }
+        }
+        
+        return false;
+    }
+    
+    
 }
