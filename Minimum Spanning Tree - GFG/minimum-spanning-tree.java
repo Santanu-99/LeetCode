@@ -48,9 +48,64 @@ class Solution{
     
 	static int spanningTree(int V, int E, int edges[][]){
 	    // Code Here. 
-	    int ans = primsAlgoMST(V, E,edges);
+	    int ans = kruskalAlgoMST(V, E,edges);
 	    return ans;
 	   
+	}
+	
+	static int[] parent , rank;
+	
+	static int findParent(int x){
+	    if(parent[x] == x){
+	        return x;
+	    }
+	    return parent[x] = findParent(parent[x]);
+	}
+	
+	static void union(int x ,int y){
+	    if(rank[x] == rank[y]){
+	        parent[y] = x;
+	        rank[x]++;
+	    }
+	    else if(rank[x] < rank[y]){
+	        parent[x] = y;
+	    }
+	    else{
+	        parent[y] = x;
+	    }
+	}
+	
+	static int kruskalAlgoMST(int V, int E, int edges[][]){
+	    parent = new int[V];
+	    rank = new int[V];
+	    for(int i=0;i<V;i++){
+	        parent[i] = i;
+	    }
+	    
+	    PriorityQueue<int[]> pq =  new PriorityQueue<>((a,b)->{
+	        return a[2]-b[2];
+	    });
+	    
+	    for(int[] edge : edges){
+	        pq.add(edge);
+	    }
+	    
+	    int totWt = 0;
+	    while(pq.size() > 0){
+	        int[] edge = pq.remove();
+	        int u = edge[0];
+	        int v = edge[1];
+	        int wt = edge[2];
+	        int pu = findParent(u);
+	        int pv = findParent(v);
+	        
+	        if(pu != pv){
+	            union(pu,pv);
+	            totWt += wt;
+	        }
+	    }
+	    
+	    return totWt;
 	}
 	
 	static int primsAlgoMST(int V, int E, int edges[][]){
