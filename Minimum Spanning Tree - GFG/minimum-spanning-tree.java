@@ -45,9 +45,15 @@ class Solution{
             this.wt = wt;
         }
     }
+    
 	static int spanningTree(int V, int E, int edges[][]){
 	    // Code Here. 
-	    
+	    int ans = primsAlgoMST(V, E,edges);
+	    return ans;
+	   
+	}
+	
+	static int primsAlgoMST(int V, int E, int edges[][]){
 	    ArrayList<Edge>[] graph = new ArrayList[V];
 	    for(int i=0;i<V;i++){
 	        graph[i] = new ArrayList<>();
